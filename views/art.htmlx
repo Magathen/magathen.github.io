@@ -1,0 +1,22 @@
+%{
+    import os
+    
+    def dirlist(directory_path):
+        files = []
+    
+        for entry_name in os.listdir(directory_path):
+            if entry_name.startswith('.'):
+                continue
+            entry_path = os.path.join(directory_path, entry_name)
+            if os.path.isfile(entry_path):
+                files.append(entry_path);
+            elif os.path.isdir(entry_path):
+                for file in dirlist(entry_path):
+                    files.append(file);
+    
+        return files
+    
+    files = dirlist('media');
+    images = ['<img src="/%s"/>' % file for file in files];
+    "<br>".join(images)
+    }
